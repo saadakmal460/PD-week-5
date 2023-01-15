@@ -7,6 +7,7 @@ void gotoxy(int x , int y);
 char getCharATXY(short int x , short int y);
 void erase(int x , int y);
 void printPacman(int x , int y);
+int gameScore(int score);
 
 
 
@@ -14,6 +15,8 @@ main(){
 
 int pacmanX = 28;
 int pacmanY = 1;
+int score = 0;
+int result ;
 bool gameRunning = true;
 
 system("cls");
@@ -23,24 +26,6 @@ printPacman(pacmanX , pacmanY);
 while(gameRunning)
 {
 
-if(GetAsyncKeyState(VK_RIGHT))
-{
-
- char nextLocation = getCharATXY(pacmanX + 1 , pacmanY);
- if (nextLocation = ' ')
- {
-  erase(pacmanX , pacmanY);
-  pacmanX = pacmanX + 1;
-  printPacman(pacmanX , pacmanY);
- }
-
-}
- 
-
-
-
-
-
 
 
 
@@ -48,15 +33,53 @@ if(GetAsyncKeyState(VK_LEFT))
 {
 
  char nextLocation = getCharATXY(pacmanX - 1 , pacmanY);
- if (nextLocation = ' ')
+ if (nextLocation == ' ')
  {
   erase(pacmanX , pacmanY);
   pacmanX = pacmanX - 1;
   printPacman(pacmanX , pacmanY);
  }
+ if (nextLocation == '-')
+ {
+  erase(pacmanX , pacmanY);
+  pacmanX = pacmanX - 1;
+  printPacman(pacmanX , pacmanY);
+  result = gameScore(score+2);
+
+
+ }
+
 
 
 }
+
+
+if(GetAsyncKeyState(VK_RIGHT))
+{
+
+ char nextLocation = getCharATXY(pacmanX + 1 , pacmanY);
+ if (nextLocation == ' ')
+ {
+  erase(pacmanX , pacmanY);
+  pacmanX = pacmanX + 1;
+  printPacman(pacmanX , pacmanY);
+ 
+}
+ if (nextLocation == '-')
+ {
+  erase(pacmanX , pacmanY);
+  pacmanX = pacmanX + 1;
+  printPacman(pacmanX , pacmanY);
+  result = gameScore(score+2);
+
+
+ }
+
+
+
+ 
+}
+ 
 
 
 
@@ -64,11 +87,20 @@ if(GetAsyncKeyState(VK_UP))
 {
 
  char nextLocation = getCharATXY(pacmanX, pacmanY - 1);
- if (nextLocation = ' ')
+ if (nextLocation == ' ')
  {
   erase(pacmanX , pacmanY);
   pacmanY = pacmanY - 1;
   printPacman(pacmanX , pacmanY);
+ }
+  if (nextLocation == '-')
+ {
+  erase(pacmanX , pacmanY);
+  pacmanY = pacmanY - 1;
+  printPacman(pacmanX , pacmanY);
+  
+
+
  }
 
 }
@@ -78,11 +110,21 @@ if(GetAsyncKeyState(VK_DOWN))
 {
 
  char nextLocation = getCharATXY(pacmanX, pacmanY + 1);
- if (nextLocation = ' ')
+ if (nextLocation == ' ')
  {
   erase(pacmanX , pacmanY);
   pacmanY = pacmanY + 1;
   printPacman(pacmanX , pacmanY);
+ }
+
+  if (nextLocation == '-')
+ {
+  erase(pacmanX , pacmanY);
+  pacmanY = pacmanY + 1;
+  printPacman(pacmanX , pacmanY);
+  result = gameScore(score+2);
+
+
  }
 
 }
@@ -90,7 +132,6 @@ if(GetAsyncKeyState(VK_DOWN))
 Sleep(200);
 }
 }
-
 
 
 void maze()
@@ -157,6 +198,16 @@ void erase(int x , int y){
 
 void printPacman(int x , int y){
 
-    gotoxy(x,y);
-    cout << "p";
+  gotoxy(x,y);
+  cout << "p";
+}
+
+
+
+int gameScore(int score)
+{
+  
+  score = score + 2;
+  gotoxy(1,1);
+  cout << "Score: " << score;
 }
